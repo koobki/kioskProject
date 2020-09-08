@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="edu.sungil.foods.web.domain.DefaultMapper">
+
+    <select id="selectName" resultType="String">
+        SELECT 'name' as name
+          from dual
+    </select>
+    
+    <select id="selectUserInfo" parameterType="Long" resultType="edu.sungil.foods.web.domain.dto.UserInfo">
+        SELECT user_no
+              ,user_nm
+              ,DATE_FORMAT(user_birth_dt,'%Y/%m/%d') user_birth_dt
+          from sy_user
+         where user_no = #{userNo}
+    </select>
+    
+    <insert id="addUserInfo" parameterType="edu.sungil.foods.web.domain.dto.UserInfo">
+        insert into mainDb.sy_user(user_no, user_nm, user_birth_dt)
+		values(
+		    #{userNo}, 
+		    #{userNm}, 
+		    date_format(#{userBirthDt},'%Y-%m-%d')
+		)
+    </insert>
+
+  
+</mapper> 
