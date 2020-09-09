@@ -13,7 +13,6 @@
     <title>관리페이지</title>
   <script type ="text/javascript">
     function showPopup(prdNo){
-    	alert(prdNo);
     }
     </script>
     
