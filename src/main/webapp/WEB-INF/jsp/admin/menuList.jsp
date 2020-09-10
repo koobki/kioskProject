@@ -96,7 +96,7 @@
                                     <tbody>
                                         <tr class="tr-shadow" onclick='showPopup(1)'  data-toggle="modal" data-target="#largeModal">
                                             <td>2</td>
-                                            <td>춘천 국물 닭갈비 떡뽁이</td>
+                                            <td>춘천 국물 닭갈비 떡볶이</td>
                                             <td>2,000</td>
                                             <td class="desc">닭갈비와 떡볶이의 오묘한 조화</td>
                                             <td>100</td>

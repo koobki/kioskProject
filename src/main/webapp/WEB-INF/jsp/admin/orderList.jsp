@@ -108,7 +108,7 @@
                                             <td>2</td>
                                             <td>2020-09-27 02:12</td>
                                             <td>1</td>
-                                            <td class="desc">매운떡복이</td>
+                                            <td class="desc">매운떡볶이</td>
                                             <td>2</td>
                                             <td>3,000</td>
                                             <td><span class="status--denied">결제완료</span></td>

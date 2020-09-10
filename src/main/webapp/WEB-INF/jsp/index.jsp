@@ -64,7 +64,7 @@
               <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  춘천 국물 닭갈비 떡뽁이
+                  춘천 국물 닭갈비 떡볶이
                 </h4>
                 <h5>2,000원</h5>
                 <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
@@ -86,7 +86,7 @@
               <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  춘천 국물 닭갈비 떡뽁이
+                  춘천 국물 닭갈비 떡볶이
                 </h4>
                 <h5>2,000원</h5>
                 <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
@@ -108,7 +108,7 @@
               <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  춘천 국물 닭갈비 떡뽁이
+                  춘천 국물 닭갈비 떡볶이
                 </h4>
                 <h5>2,000원</h5>
                 <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
@@ -130,7 +130,7 @@
               <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  춘천 국물 닭갈비 떡뽁이
+                  춘천 국물 닭갈비 떡볶이
                 </h4>
                 <h5>2,000원</h5>
                 <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
