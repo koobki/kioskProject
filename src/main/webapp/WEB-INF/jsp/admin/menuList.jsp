@@ -11,10 +11,7 @@
 
     <!-- Title Page-->
     <title>관리페이지</title>
-  <script type ="text/javascript">
-    function showPopup(prdNo){
-    }
-    </script>
+  
     
 </head>
 
@@ -124,7 +121,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="card-body card-block">
-                                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                        <form  id="form" class="form-horizontal">
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
                                                     <label class=" form-control-label">메뉴번호</label>
@@ -147,7 +144,7 @@
                                                     <label for="price" class=" form-control-label">단가</label>
                                                 </div>
                                                 <div class="col-3 col-md-3">
-                                                    <input type="number" id="price" name="price" placeholder="단가" class="form-control">
+                                                    <input type="number" id="menuPc" name="menuPc" placeholder="단가" class="form-control">
                                                     <small class="help-block form-text"></small>
                                                 </div>
                                             </div>
@@ -173,7 +170,15 @@
                                                     <label for="textarea-input" class=" form-control-label">전시여부</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-													<input type="checkbox" checked data-toggle="toggle" data-size="lg">
+													<div class="form-check-inline">
+													  <label class="form-check-label">
+													    <input type="radio" class="form-check-input" name="menuDispYn" value="Y">전시													  </label>
+													</div>
+													<div class="form-check-inline">
+													  <label class="form-check-label">
+													    <input type="radio" class="form-check-input" name="menuDispYn" value="N">비전시
+													  </label>
+													</div>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -181,7 +186,7 @@
                                                     <label for="file-input" class=" form-control-label">메뉴 이미지</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="file" id="file-input" name="file-input" class="form-control-file">
+                                                    <input type="file" id="file" name="file" class="form-control-file">
                                                 </div>
                                             </div>
                                         </form>
@@ -189,7 +194,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="button" class="btn btn-primary">저장</button>
+							<button id="btnSave" type="button" class="btn btn-primary">저장</button>
 						</div>
 					</div>
 				</div>
@@ -199,4 +204,47 @@
              <%@ include file="/WEB-INF/jsp/admin/include/footer.jsp" %>   
     </div>
 </body>
+<script type ="text/javascript">
+    function showPopup(prdNo){
+    }
+    
+    $("#btnSave").click(function (event) {
+        //preventDefault 는 기본으로 정의된 이벤트를 작동하지 못하게 하는 메서드이다. submit을 막음
+        event.preventDefault();
+
+        // Get form
+        var form = $('#form')[0];
+
+	    // Create an FormData object 
+        var data = new FormData(form);
+
+	   // disabled the submit button
+        $("#btnSave").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/admin/menu/save",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+            	alert("저장되었습니다.");
+                $("#btnSave").prop("disabled", false);
+                //폼데이터 초기화
+                document.getElementById("form").reset();
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                $("#btnSave").prop("disabled", false);
+                alert("저장에 실패했습니다.");
+            }
+        });
+
+    });
+    
+    
+    </script>
 </html>
