@@ -11,11 +11,6 @@
 
     <!-- Title Page-->
     <title>관리페이지</title>
-  <script type ="text/javascript">
-    function showPopup(prdNo){
-    }
-    </script>
-    
 </head>
 
 <body class="animsition">
@@ -124,13 +119,13 @@
 						</div>
 						<div class="modal-body">
 							<div class="card-body card-block">
-                                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                        <form class="form-horizontal" id="form">
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
                                                     <label class=" form-control-label">메뉴번호</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <p class="form-control-static" id="menuNm" name="menuNm">1</p>
+                                                    <p class="form-control-static" id="menuNo" name="menuNo">1</p>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -147,16 +142,16 @@
                                                     <label for="price" class=" form-control-label">단가</label>
                                                 </div>
                                                 <div class="col-3 col-md-3">
-                                                    <input type="number" id="price" name="price" placeholder="단가" class="form-control">
+                                                    <input type="number" id="menuPc" name="menuPc" placeholder="단가" class="form-control">
                                                     <small class="help-block form-text"></small>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label for="menuDesc" class=" form-control-label">메뉴 설명</label>
+                                                    <label for="menuDsc" class=" form-control-label">메뉴 설명</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <textarea name="menuDesc" id="menuDesc" rows="3" placeholder="메뉴 설명..." class="form-control"></textarea>
+                                                    <textarea name="menuDsc" id="menuDsc" rows="3" placeholder="메뉴 설명..." class="form-control"></textarea>
                                                     <small class="help-block form-text"></small>
                                                 </div>
                                             </div>
@@ -173,15 +168,24 @@
                                                     <label for="textarea-input" class=" form-control-label">전시여부</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-													<input type="checkbox" checked data-toggle="toggle" data-size="lg">
+													<div class="form-check-inline">
+														<label class="form-check-label">
+															<input type="radio" class="form-check-input" name="mainDispYn" value="Y" checked>전시
+														</label>
+													</div>
+													<div class="form-check-inline">
+														<label class="form-check-label">
+															<input type="radio" class="form-check-input" name="mainDispYn" value="N">비전시
+														</label>
+													</div>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label for="file-input" class=" form-control-label">메뉴 이미지</label>
+                                                    <label for="file-input" class="form-control-label">메뉴 이미지</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="file" id="file-input" name="file-input" class="form-control-file">
+                                                    <input type="file" id="fileInfo" name="fileInfo" class="form-control-file">
                                                 </div>
                                             </div>
                                         </form>
@@ -189,7 +193,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="button" class="btn btn-primary">저장</button>
+							<button type="button" class="btn btn-primary" id="btnSave" onclick="javascript:Save();">저장</button>
 						</div>
 					</div>
 				</div>
@@ -199,4 +203,34 @@
              <%@ include file="/WEB-INF/jsp/admin/include/footer.jsp" %>   
     </div>
 </body>
+		  <script type ="text/javascript">
+			    function showPopup(prdNo){
+			    }
+			    
+			    	$("#btnSave").click(function(){
+			    		
+			    		var form = $("#form")[0];
+			    		var data = new FormDate(form)
+			    		
+			    	    $.ajax({
+			    	        url : '/admin/menu/add?',
+			    	        data : data,
+			    	        method : 'post',
+			    	        
+			    	        enctype: 'multipart/form-data',
+			    	        processData: false,
+			    	        contentType: false,
+			    	        
+			    	        success : function(data) {
+								alert("메뉴등록 성공")
+			    	        },
+			    	        complete : function(data) {
+			    	         	console.log(data.responseText);
+			    	        }
+			    	    });
+			    	
+			    	});
+
+	
+		  </script>
 </html>
