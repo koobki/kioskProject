@@ -1,6 +1,10 @@
 package edu.sungil.foods.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,5 +42,11 @@ public class AdminController {
 	public void saveMenu(MenuInfo menuInfo) {
 		adminService.saveMenu(menuInfo);
 		
+	}
+	
+	@RequestMapping(value="/menu", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<MenuInfo>> getUserInfo(MenuInfo menuInfo) {
+		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(menuInfo), HttpStatus.OK);
 	}
 }

@@ -17,5 +17,18 @@
                               )
 </insert>
 
+<select id="selectMenuList" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo" resultType="edu.sungil.foods.web.domain.dto.MenuInfo">
+select *
+  from mainDb.tb_menu
+ where 1=1
+   <if test="menuNo !='' and menuNo != null">
+       and menu_no = #{menuNo}
+   </if>
+     <if test="menuNm !='' and menuNm != null">
+       and menu_nm like CONCAT('%',#{menuNm},'%')
+   </if> 
+
+</select>
+
 
 </mapper>

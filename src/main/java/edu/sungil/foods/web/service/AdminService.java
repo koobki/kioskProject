@@ -3,6 +3,7 @@ package edu.sungil.foods.web.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,11 @@ public class AdminService {
 		//2. db 저장
 		adminMapper.insertMenuInfo(menuInfo);
 		
+	}
+
+	public List<MenuInfo> getMenuList(MenuInfo menuInfo) {
+		List<MenuInfo> menuInfoList = adminMapper.selectMenuList(menuInfo);
+		return menuInfoList;
 	}
 
 }

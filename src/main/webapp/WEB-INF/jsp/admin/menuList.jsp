@@ -67,27 +67,27 @@
                             <h3 class="title-5 m-b-35">메뉴목록</h3>
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                    <input type="text" placeholder="메뉴번호" class="au-btn-filter">
-                                    <input type="text" placeholder="메뉴명" class="au-btn-filter">
+                                    <input type="text" id="schMenuNo" placeholder="메뉴번호" class="au-btn-filter">
+                                    <input type="text" id="schMenuNm" placeholder="메뉴명" class="au-btn-filter">
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
                                         <i class="zmdi zmdi-plus"></i>메뉴 추가</button>
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                    <button id="btnSearch" class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="fa  fa-search"></i>검색</button>
                                 </div>
                             </div>
                             <div class="table-responsive table-responsive-data2">
-                                <table class="table table-data2">
+                                <table id="table"
+                                 class="table table-data2">
                                     <thead>
                                         <tr>
-                                            <th>메뉴번호</th>
-                                            <th>메뉴명</th>
-                                            <th>단가</th>
-                                            <th>메뉴설명</th>
-                                            <th>메뉴재고</th>
-                                            <th>전시여부</th>
-                                            <th></th>
+                                            <th data-field="menuNo">메뉴번호</th>
+                                            <th data-field="menuNm">메뉴명</th>
+                                            <th data-field="menuPc">단가</th>
+                                            <th data-field="menuDesc">메뉴설명</th>
+                                            <th data-field="menuStock">메뉴재고</th>
+                                            <th data-field="menuDispYn">전시여부</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -127,7 +127,8 @@
                                                     <label class=" form-control-label">메뉴번호</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <p class="form-control-static" id="menuNm" name="menuNm">1</p>
+                                                    <input type="text" id="menuNo" name="menuNo" class="form-control" readonly>
+                                                    <small class="form-text text-muted"></small>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -205,8 +206,54 @@
     </div>
 </body>
 <script type ="text/javascript">
+    var menuData=[];
     function showPopup(prdNo){
     }
+    $(document).ready(function(){
+        $('#table').bootstrapTable({
+            data: menuData
+        }); 
+        
+        $("#table").delegate("tr", "click", function(){
+        	var str = "";
+        	var tdArr = new Array();	// 배열 선언
+        	// 현재 클릭된 Row(<tr>)
+        	var tr = $(this);
+        	var td = tr.children();
+        	// td.eq(index)를 통해 값을 가져올 수도 있다.
+        	var menuNo = td.eq(0).text();
+        	console.log("menuNo = " + menuNo);
+        	getMenuInfo(menuNo);
+        	
+        });
+    });
+    
+    getMenuInfo = function(menuNo){
+    	$.ajax({
+	        url : '/admin/menu',
+	        data: {
+	        	menuNo: menuNo
+	        },
+	        dataType: "json",
+	        method : 'post',
+	        success : function(data) {
+	        	if(data ===""){
+	        		alert("상품이 존재하지 않습니다.")
+	        	} else{
+	        		$("#menuNo").val(data[0].menuNo);
+		        	$("#menuNm").val(data[0].menuNm);
+		        	$("#menuDesc").val(data[0].menuDesc);
+	        	}
+	        },
+	        complete : function(data) {
+	        	$('#largeModal').modal('toggle')
+	            
+	        }
+	    });
+    	
+    	
+    }
+
     
     $("#btnSave").click(function (event) {
         //preventDefault 는 기본으로 정의된 이벤트를 작동하지 못하게 하는 메서드이다. submit을 막음
@@ -245,6 +292,29 @@
 
     });
     
-    
+	$("#btnSearch").click(function(){
+	    $.ajax({
+	        url : '/admin/menu',
+	        data: {
+	        	menuNo: $("#schMenuNo").val()
+	           ,menuNm: $("#schMenuNm").val()
+	        },
+	        dataType: "json",
+	        method : 'post',
+	        success : function(data) {
+	        	if(data ===""){
+	        		alert("상품이 존재하지 않습니다.")
+	        	} else{
+	        		menuData = data;
+	        	}
+	        },
+	        complete : function(data) {
+	        	$('#table').bootstrapTable('load', menuData);
+	            console.log(data.responseText);
+	        }
+	    });
+	
+	});
+
     </script>
 </html>
