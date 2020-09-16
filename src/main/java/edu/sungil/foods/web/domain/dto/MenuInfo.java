@@ -3,18 +3,20 @@ package edu.sungil.foods.web.domain.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MenuInfo {
-	private int menuNo;
+	private Long menuNo;
 	private String menuNm;
-	private int menuPc;
+	private Long menuPc;
 	private String menuDsc;
-	private int menuStock;
+	private Long menuStock;
 	private String menuDispYn;
 	private String menuImgNm;
 	private MultipartFile fileInfo;
-	public int getMenuNo() {
+	
+	
+	public Long getMenuNo() {
 		return menuNo;
 	}
-	public void setMenuNo(int menuNo) {
+	public void setMenuNo(Long menuNo) {
 		this.menuNo = menuNo;
 	}
 	public String getMenuNm() {
@@ -23,10 +25,10 @@ public class MenuInfo {
 	public void setMenuNm(String menuNm) {
 		this.menuNm = menuNm;
 	}
-	public int getMenuPc() {
+	public Long getMenuPc() {
 		return menuPc;
 	}
-	public void setMenuPc(int menuPc) {
+	public void setMenuPc(Long menuPc) {
 		this.menuPc = menuPc;
 	}
 	public String getMenuDsc() {
@@ -35,10 +37,10 @@ public class MenuInfo {
 	public void setMenuDsc(String menuDsc) {
 		this.menuDsc = menuDsc;
 	}
-	public int getMenuStock() {
+	public Long getMenuStock() {
 		return menuStock;
 	}
-	public void setMenuStock(int menuStock) {
+	public void setMenuStock(Long menuStock) {
 		this.menuStock = menuStock;
 	}
 	public String getMenuDispYn() {

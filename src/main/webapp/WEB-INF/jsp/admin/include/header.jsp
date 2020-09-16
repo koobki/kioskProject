@@ -20,9 +20,8 @@
     <link href="../static/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
     <link href="../static/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="../static/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="../static/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
-   
+    <link href="../static/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">  
+	  
     
 </head>
 <body>
