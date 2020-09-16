@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,11 @@ public class AdminService {
 		//2. DB데이터저장
 			menuInfo.setMenuImgNm(fileNm);
 			adminMapper.insertMenuInfo(menuInfo);
+	}
+
+	public List<MenuInfo> getMenuInfo(MenuInfo menuInfo) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectMenuList(menuInfo);
 	}
 	 
 }

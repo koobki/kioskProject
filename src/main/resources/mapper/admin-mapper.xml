@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="edu.sungil.foods.web.domain.DefaultMapper">
+<mapper namespace="edu.sungil.foods.web.domain.AdminMapper">
 
 	<insert id="insertMenuInfo" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo">
 		insert into mainDb.TB_MENU(menu_nm, menu_pc, menu_dsc, menu_stock, menu_disp_yn, menu_img_nm)
@@ -13,7 +13,35 @@
 				#{menuStock},
 				#{menuDispYn},
 				#{menuImgNm}
+				
 			)
 	</insert>
+  
+  
+  	<select id="selectMenuList" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo" 
+  															resultType="edu.sungil.foods.web.domain.dto.MenuInfo">
+  		select menu_no, 
+	  				menu_nm, 
+			  		menu_pc, 
+			  		menu_dsc, 
+			  		menu_stock, 
+			  		menu_disp_yn, 
+			  		menu_img_nm 
+		 from mainDb.TB_MENU
+		 
+		 where 1=1
+		   
+		 <if test="menuNo != '' and menuNo != null ">
+		 and menu_no LIKE CONCAT('%' ,#{menuNo}, '%')
+		 </if>
+		 
+		 <if test="menuNm != '' and menuNm != null ">
+		 and menu_nm LIKE CONCAT('%' ,#{menuNm}, '%')
+		 </if>	
+ 	
+  	</select>
+  
+  
+  
   
 </mapper> 
