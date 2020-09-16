@@ -66,27 +66,26 @@
                             <h3 class="title-5 m-b-35">메뉴목록</h3>
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                    <input type="text" placeholder="메뉴번호" class="au-btn-filter">
-                                    <input type="text" placeholder="메뉴명" class="au-btn-filter">
+                                    <input type="text" id="schMenuNo" placeholder="메뉴번호" class="au-btn-filter">
+                                    <input type="text" id="schMenuNm" placeholder="메뉴명" class="au-btn-filter">
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
                                         <i class="zmdi zmdi-plus"></i>메뉴 추가</button>
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                    <button id="btnSearch" class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="fa  fa-search"></i>검색</button>
                                 </div>
                             </div>
                             <div class="table-responsive table-responsive-data2">
-                                <table class="table table-data2">
+                                <table id="table" class="table table-data2">
                                     <thead>
                                         <tr>
-                                            <th>메뉴번호</th>
-                                            <th>메뉴명</th>
-                                            <th>단가</th>
-                                            <th>메뉴설명</th>
-                                            <th>메뉴재고</th>
-                                            <th>전시여부</th>
-                                            <th></th>
+                                            <th data-field="menuNo">메뉴번호</th>
+                                            <th data-field="menuNm">메뉴명</th>
+                                            <th data-field="menuPc">단가</th>
+                                            <th data-field="menuDsc">메뉴설명</th>
+                                            <th data-field="menuStock">메뉴재고</th>
+                                            <th data-field="menuDispYn">전시여부</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -206,8 +205,15 @@
 </body>
 
 <script type ="text/javascript">
+	var menuData=[];
+
     function showPopup(prdNo){
     }
+    $(document).ready(function(){
+    	$('#table').bootstrapTable({
+    		data:menuData
+    	});
+    });
     
     $("#btnSave").click(function(){
     	//event.preventDefault();
@@ -232,6 +238,30 @@
 	    });
 	
 	});
+    
+
+    	$("#btnSearch").click(function(){
+    	    $.ajax({
+    	        url : '/admin/menu',
+    	        method : 'post',
+    	        data: {
+    	        	menuNo: $('#schMenuNo').val(),
+    	        	menuNm: $('#schMenuNm').val(),
+    	        },
+    	        success : function(data) {
+    	        	if(data ===""){
+    	        		alert("메뉴가 존재하지 않습니다.")
+    	        	} else{
+    	        		menuData = data;
+    	        	}
+    	        },
+    	        complete : function(data) {
+    	        	$('#table').bootstrapTable('load', menuData);
+    	            console.log(data.responseText);
+    	        }
+    	    });
+    	});
+    	
     
 </script>
 
