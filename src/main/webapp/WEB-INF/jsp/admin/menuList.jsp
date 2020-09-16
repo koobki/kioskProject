@@ -69,9 +69,17 @@
                                 <div class="table-data__tool-left">
                                     <input type="text" id="schMenuNo" placeholder="메뉴번호" class="au-btn-filter">
                                     <input type="text" id="schMenuNm" placeholder="메뉴명" class="au-btn-filter">
+                                    <div class="rs-select2--light rs-select2--sm">
+                                        <select class="js-select2" id="schMenuDispYn">
+                                            <option selected="selected" value="">전시상태</option>
+                                            <option value="Y">전시</option>
+                                            <option value="N">비전시</option>
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
+                                    <button id="btnAdd" class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
                                         <i class="zmdi zmdi-plus"></i>메뉴 추가</button>
                                     <button id="btnSearch" class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="fa  fa-search"></i>검색</button>
@@ -194,6 +202,7 @@
                                     </div>
 						</div>
 						<div class="modal-footer">
+					    	<button type="button" id="btnReset" class="btn btn-secondary" >초기화</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 							<button id="btnSave" type="button" class="btn btn-primary">저장</button>
 						</div>
@@ -229,6 +238,7 @@
     });
     
     getMenuInfo = function(menuNo){
+    	document.getElementById("form").reset();
     	$.ajax({
 	        url : '/admin/menu',
 	        data: {
@@ -243,10 +253,13 @@
 	        		$("#menuNo").val(data[0].menuNo);
 		        	$("#menuNm").val(data[0].menuNm);
 		        	$("#menuDesc").val(data[0].menuDesc);
+		        	$("#menuPc").val(data[0].menuPc);
+		        	$("#menuStock").val(data[0].menuStock);
+		        	$(":radio[name='menuDispYn'][value='" + data[0].menuDispYn + "']").attr('checked', true);
 	        	}
 	        },
 	        complete : function(data) {
-	        	$('#largeModal').modal('toggle')
+	        	$('#largeModal').modal('toggle');
 	            
 	        }
 	    });
@@ -279,6 +292,8 @@
             timeout: 600000,
             success: function (data) {
             	alert("저장되었습니다.");
+            	$('#largeModal').modal('toggle');
+            	search();
                 $("#btnSave").prop("disabled", false);
                 //폼데이터 초기화
                 document.getElementById("form").reset();
@@ -293,11 +308,16 @@
     });
     
 	$("#btnSearch").click(function(){
-	    $.ajax({
+		search();
+	});
+	
+	search  = function(){
+		$.ajax({
 	        url : '/admin/menu',
 	        data: {
 	        	menuNo: $("#schMenuNo").val()
 	           ,menuNm: $("#schMenuNm").val()
+	           ,menuDispYn: $('#schMenuDispYn option:selected' ).val()
 	        },
 	        dataType: "json",
 	        method : 'post',
@@ -313,7 +333,16 @@
 	            console.log(data.responseText);
 	        }
 	    });
+	}
 	
+	
+	
+	$("#btnReset").click(function(){
+		document.getElementById("form").reset();
+	});
+	
+	$("#btnAdd").click(function(){
+		document.getElementById("form").reset();
 	});
 
     </script>

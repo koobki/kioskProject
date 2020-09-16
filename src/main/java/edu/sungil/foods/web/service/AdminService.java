@@ -33,7 +33,12 @@ public class AdminService {
 		    }
 		
 		//2. db 저장
-		adminMapper.insertMenuInfo(menuInfo);
+		if(StringUtils.isEmpty(menuInfo.getMenuNo())) {
+			adminMapper.insertMenuInfo(menuInfo);
+		} else {
+			adminMapper.updateMenuInfo(menuInfo);
+		}
+		
 		
 	}
 

@@ -26,9 +26,23 @@ select *
    </if>
      <if test="menuNm !='' and menuNm != null">
        and menu_nm like CONCAT('%',#{menuNm},'%')
+   </if>
+   <if test="menuDispYn !='' and menuDispYn != null">
+       and menu_disp_yn = #{menuDispYn} 
    </if> 
 
 </select>
+
+<update id="updateMenuInfo" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo">
+    update mainDb.tb_menu
+       set menu_nm = #{menuNm}
+          ,menu_desc = #{menuDesc}
+          ,menu_pc = #{menuPc}
+          ,menu_stock = #{menuStock}
+          ,menu_disp_yn = #{menuDispYn}
+   where menu_no = #{menuNo}
+
+</update>
 
 
 </mapper>
