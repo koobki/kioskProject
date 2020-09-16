@@ -11,10 +11,7 @@
 
     <!-- Title Page-->
     <title>관리페이지</title>
-  <script type ="text/javascript">
-    function showPopup(prdNo){
-    }
-    </script>
+  
     
 </head>
 
@@ -70,27 +67,26 @@
                             <h3 class="title-5 m-b-35">메뉴목록</h3>
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                    <input type="text" placeholder="메뉴번호" class="au-btn-filter">
-                                    <input type="text" placeholder="메뉴명" class="au-btn-filter">
+                                    <input type="text" id="schMenuNo" placeholder="메뉴번호" class="au-btn-filter">
+                                    <input type="text" id="schMenuNm" placeholder="메뉴명" class="au-btn-filter">
                                 </div>
                                 <div class="table-data__tool-right">
                                     <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
                                         <i class="zmdi zmdi-plus"></i>메뉴 추가</button>
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                    <button id="btnSearch" class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="fa  fa-search"></i>검색</button>
                                 </div>
                             </div>
                             <div class="table-responsive table-responsive-data2">
-                                <table class="table table-data2">
+                                <table id="table" class="table table-data2">
                                     <thead>
                                         <tr>
-                                            <th>메뉴번호</th>
-                                            <th>메뉴명</th>
-                                            <th>단가</th>
-                                            <th>메뉴설명</th>
-                                            <th>메뉴재고</th>
-                                            <th>전시여부</th>
-                                            <th></th>
+                                            <th data-field="menuNo">메뉴번호</th>
+                                            <th data-field="menuNm">메뉴명</th>
+                                            <th data-field="menuPc">단가</th>
+                                            <th data-field="menuDsc">메뉴설명</th>
+                                            <th data-field="menuStock">메뉴재고</th>
+                                            <th data-field="menuDispYn">전시여부</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -124,13 +120,13 @@
 						</div>
 						<div class="modal-body">
 							<div class="card-body card-block">
-                                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                        <form id="form" class="form-horizontal">
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
                                                     <label class=" form-control-label">메뉴번호</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <p class="form-control-static" id="menuNm" name="menuNm">1</p>
+                                                    <p class="form-control-static" id="menuNo" name="menuNo">1</p>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -147,16 +143,16 @@
                                                     <label for="price" class=" form-control-label">단가</label>
                                                 </div>
                                                 <div class="col-3 col-md-3">
-                                                    <input type="number" id="price" name="price" placeholder="단가" class="form-control">
+                                                    <input type="number" id="menuPc" name="menuPc" placeholder="단가" class="form-control">
                                                     <small class="help-block form-text"></small>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label for="menuDesc" class=" form-control-label">메뉴 설명</label>
+                                                    <label for="menuDec" class=" form-control-label">메뉴 설명</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <textarea name="menuDesc" id="menuDesc" rows="3" placeholder="메뉴 설명..." class="form-control"></textarea>
+                                                    <textarea name="menuDsc" id="menuDsc" rows="3" placeholder="메뉴 설명..." class="form-control"></textarea>
                                                     <small class="help-block form-text"></small>
                                                 </div>
                                             </div>
@@ -173,7 +169,16 @@
                                                     <label for="textarea-input" class=" form-control-label">전시여부</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-													<input type="checkbox" checked data-toggle="toggle" data-size="lg">
+													<div class="form-check-inline">
+														<label class="form-check-label">
+															<input type="radio" class="form-check-input" name="menuDispYn" value="Y" checked>전시
+														</label>
+													</div>
+													<div class="form-check-inline">
+														<label class="form-check-label">
+															<input type="radio" class="form-check-input" name="menuDispYn" value="N">비전시
+														</label>
+													</div>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -181,7 +186,7 @@
                                                     <label for="file-input" class=" form-control-label">메뉴 이미지</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="file" id="file-input" name="file-input" class="form-control-file">
+                                                    <input type="file" id="fileInfo" name="fileInfo" class="form-control-file">
                                                 </div>
                                             </div>
                                         </form>
@@ -189,7 +194,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="button" class="btn btn-primary">저장</button>
+							<button type="button" id="btnSave" class="btn btn-primary">저장</button>
 						</div>
 					</div>
 				</div>
@@ -199,4 +204,64 @@
              <%@ include file="/WEB-INF/jsp/admin/include/footer.jsp" %>   
     </div>
 </body>
+
+
+	<script type ="text/javascript">
+		var menuData=[];
+	
+    	function showPopup(prdNo){
+    	}
+    	$(document).ready(function() {
+    		$('#table').bootstrapTable({
+    			data: menuData
+    		});
+    	});
+    	
+		$("#btnSave").click(function(){
+				
+				var form = $("#form")[0];
+				var data = new FormData(form);
+				
+				
+			    $.ajax({
+			        url : '/admin/menu/add',
+			        data : data, 
+			        method : 'post',
+			        enctype: 'multpart/form-data',
+			        processData: false,
+			        contentType: false,
+			        success : function(data) {
+			        		alert("메뉴등록 성공.")
+			        },
+			        complete : function(data) {
+			            console.log(data.responseText);
+			        }
+			    });
+			
+			});
+		
+		$("#btnSearch").click(function(){
+		    $.ajax({
+		        url : '/admin/menu',
+		        method : 'post',
+		        data: {
+		        	menuNo: $('#schMenuNo').val(),
+		        	menuNm: $('#schMenuNm').val()
+		        },
+		        success : function(data) {
+		        	if(data ===""){
+		        		alert("메뉴가 존재하지 않습니다.")
+		        	} else{
+		        		menuData = data;
+		        	}
+		        },
+		        complete : function(data) {
+		        	$('#table').bootstrapTable('load', menuData);
+		            console.log(data.responseText);
+		        }
+		    });
+		
+		});
+    </script>
+
 </html>
