@@ -23,17 +23,23 @@ public class AdminService {
 	 private final Path root = Paths.get("src/main/resources/static/media");
 	 
 	public void addMenu(MenuInfo menuInfo) {
-		String fileNm = String.valueOf(System.currentTimeMillis())
-		+ "." + StringUtils.getFilenameExtension(menuInfo.getFileInfo().getOriginalFilename()); 
-		
-		try {
-			Files.copy(menuInfo.getFileInfo().getInputStream(), root.resolve(fileNm));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(menuInfo.getMenuNo() == null) {
+			String fileNm = String.valueOf(System.currentTimeMillis())
+					+ "." + StringUtils.getFilenameExtension(menuInfo.getFileInfo().getOriginalFilename()); 
+					
+					
+					try {
+						Files.copy(menuInfo.getFileInfo().getInputStream(), root.resolve(fileNm));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					menuInfo.setMenuImgNm(fileNm);
+					adminMapper.insertMenuInfo(menuInfo);
+		} else {
+			adminMapper.updateMenuInfo(menuInfo);
 		}
 		
-		menuInfo.setMenuImgNm(fileNm);
-		adminMapper.insertMenuInfo(menuInfo);
 	}
 
 	public List<MenuInfo> getMenuList(MenuInfo menuInfo) {

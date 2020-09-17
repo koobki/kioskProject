@@ -18,7 +18,8 @@
   
   
   	<select id="selectMenuList" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo" resultType="edu.sungil.foods.web.domain.dto.MenuInfo">
-  		select 	menu_nm, 
+  		select 	menu_no,
+  		        menu_nm, 
 		  		menu_pc, 
 		  		menu_dsc, 
 		  		menu_stock, 
@@ -32,7 +33,20 @@
 		<if test="menuNm != '' and menuNm != null">
 		and		menu_nm like concat('%', #{menuNm} ,'%')
 		</if>
-
+		<if test="menuDispYn != '' and menuDispYn != null">
+			and		menu_Disp_Yn = #{menuDispYn}
+		</if>
 		
   	</select>
+  	
+  	
+  	<update id="updateMenuInfo" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo">
+  		update mainDb.TB_MENU set 
+  		        menu_nm = #{menuNm}, 
+		  		menu_pc = #{menuPc}, 
+		  		menu_dsc = #{menuDsc}, 
+		  		menu_stock = #{menuStock},
+		  		menu_disp_yn = #{menuDispYn}
+		where 	menu_no = #{menuNo}
+  	</update>
 </mapper> 
