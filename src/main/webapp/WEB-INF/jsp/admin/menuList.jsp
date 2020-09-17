@@ -68,9 +68,17 @@
                                 <div class="table-data__tool-left">
                                     <input type="text" id="schMenuNo" placeholder="메뉴번호" class="au-btn-filter">
                                     <input type="text" id="schMenuNm" placeholder="메뉴명" class="au-btn-filter">
+                                    <div class="rs-select2--light rs-select2--sm">
+                                        <select id="ss" class="js-select2" name="time">
+                                            <option selected="selected" value="">전체</option>
+                                            <option class="form-check-input" name="menuDispYn" value="Y">전시</option>
+                                            <option class="form-check-input" name="menuDispYn" value="N">비전시</option>
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
+                                    <button id="btnAdd" class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
                                         <i class="zmdi zmdi-plus"></i>메뉴 추가</button>
                                     <button id="btnSearch" class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="fa  fa-search"></i>검색</button>
@@ -125,7 +133,7 @@
                                                     <label class=" form-control-label">메뉴번호</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <p class="form-control-static" id="menuNo" name="menuNo">1</p>
+                                                	<input type="text" id="menuNo" name="menuNo" placeholder="메뉴 번호" readonly class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -170,12 +178,12 @@
                                                 <div class="col-12 col-md-9">
 													<div class="form-check-inline">
 													  <label class="form-check-label">
-													    <input type="radio" class="form-check-input" name="menuDispYn" value="Y" checked>전시
+													    <input type="radio" id =ss class="form-check-input" name="menuDispYn" value="Y" checked>전시
 													  </label>
 													</div>
 													<div class="form-check-inline">
 													  <label class="form-check-label">
-													    <input type="radio" class="form-check-input" name="menuDispYn" value="N">비전시
+													    <input type="radio" id =ss class="form-check-input" name="menuDispYn" value="N">비전시
 													  </label>
 													</div>
                                                 </div>
@@ -201,19 +209,56 @@
 			<!-- end modal large -->
 			
              <%@ include file="/WEB-INF/jsp/admin/include/footer.jsp" %>   
+             
+             
     </div>
 </body>
 
 <script type ="text/javascript">
 	var menuData=[];
 
-    function showPopup(prdNo){
-    }
-    $(document).ready(function(){
     	$('#table').bootstrapTable({
     		data:menuData
     	});
-    });
+    	
+    	$("#table").delegate("tr","click",function(){
+   /*  		alert("click"); */
+   			var tr = $(this);
+   			var td = tr.children();
+   			var menuNo = td.eq(0).text();
+   			getMenuInfo(menuNo);
+   	
+    	});
+    
+    
+    //단건메뉴정보 조회
+    getMenuInfo = function(menuNo){
+    	document.getElementById("form").reset();
+    	$.ajax({
+	        url : '/admin/menu',
+	        method : 'post',
+	        dataType : "json",
+	        data: {
+	        	menuNo: menuNo
+	        },
+	        success : function(data) {
+	        	if(data ===""){
+	        		alert("메뉴가 존재하지 않습니다.")
+	        	} else{
+	        		$("#menuNo").val(data[0].menuNo);
+	        		$("#menuNm").val(data[0].menuNm);
+	        		$("#menuPc").val(data[0].menuPc);
+	        		$("#menuDsc").val(data[0].menuDsc);
+	        		$("#menuStock").val(data[0].menuStock);
+	        		$(":radio[name='menuDispYn'][value="+ data[0].menuDispYn +"]").attr('checked',true);
+	        		$("#largeModal").modal('toggle');
+	        	  }
+	        },
+	        complete : function(data) {
+	            console.log(data.responseText);
+	        }
+	    });
+	}
     
     $("#btnSave").click(function(){
     	//event.preventDefault();
@@ -231,6 +276,8 @@
             
 	        success : function(data) {
 	        	alert("메뉴등록 성공.")
+	        	$("#largeModal").modal('toggle');
+	        	search();
 	        },
 	        complete : function(data) {
 	            console.log(data.responseText);
@@ -241,12 +288,17 @@
     
 
     	$("#btnSearch").click(function(){
-    	    $.ajax({
+    		search();
+    	});
+    	
+    	search = function(){
+    		$.ajax({
     	        url : '/admin/menu',
     	        method : 'post',
     	        data: {
     	        	menuNo: $('#schMenuNo').val(),
     	        	menuNm: $('#schMenuNm').val(),
+    	        	menuDispYn: $("#ss option:selected").val()
     	        },
     	        success : function(data) {
     	        	if(data ===""){
@@ -260,9 +312,15 @@
     	            console.log(data.responseText);
     	        }
     	    });
-    	});
+    	}
     	
+    	
+    $("#btnAdd").click(function(){
+    	document.getElementById("form").reset();
+    });
     
+    
+    	
 </script>
 
 
