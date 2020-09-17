@@ -70,7 +70,7 @@
                                     <input type="text" id="schMenuNm" placeholder="메뉴명" class="au-btn-filter">
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
+                                    <button id="btnAdd" class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#largeModal">
                                         <i class="zmdi zmdi-plus"></i>메뉴 추가</button>
                                     <button id="btnSearch" class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="fa  fa-search"></i>검색</button>
@@ -125,7 +125,7 @@
                                                     <label class=" form-control-label">메뉴번호</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <p class="form-control-static" id="menuNo" name="menuNo">1</p>
+                                                    <input type="text" id="menuNo" name="menuNo" placeholder="메뉴번호" readonly class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -206,14 +206,57 @@
 
 <script type ="text/javascript">
     var menuData=[];
-
-    function showPopup(prdNo){
-    }
+    
     $(document).ready(function(){
+    	
     	$('#table').bootstrapTable({
             data: menuData
         }); 
+    	
+    	$("#table").delegate("tr","click",function(){
+    		//alert("click!!!");
+    		var tr = $(this);
+    		var td = tr.children();
+    		var menuNo = td.eq(0).text();
+    		getMenuInfo(menuNo);
+
+    	});
+    	
+    	
+    	
     });
+    
+    //단건메뉴정보 조회
+    getMenuInfo = function(menuNo){
+    	document.getElementById("form").reset();
+    	$.ajax({
+	        url : '/admin/menu',
+	        method : 'post',
+	        dataType: "json",
+	        data: {
+	        	menuNo: menuNo
+	        },
+	        success : function(data) {
+	        	if(data ===""){
+	        		alert("메뉴가 존재하지 않습니다.")
+	        	} else{
+		        	$("#menuNo").val(data[0].menuNo);
+		        	$("#menuNm").val(data[0].menuNm);
+		        	$("#menuDsc").val(data[0].menuDsc);
+		        	$("#menuPc").val(data[0].menuPc);
+		        	$("#menuStock").val(data[0].menuStock);
+		        	$(":radio[name='menuDispYn'][value="+ data[0].menuDispYn  +"]").attr('checked', true);
+	        	    $('#largeModal').modal('toggle');
+	        	}
+	        },
+	        complete : function(data) {
+	            console.log(data.responseText);
+	        }
+	    });
+    }
+    
+    
+    
     
     $("#btnSave").click(function(){
     	//event.preventDefault();
@@ -231,6 +274,8 @@
             
 	        success : function(data) {
 	        	alert("메뉴등록 성공.")
+	        	$('#largeModal').modal('toggle');
+	        	search();
 	        },
 	        complete : function(data) {
 	            console.log(data.responseText);
@@ -240,6 +285,10 @@
 	});
     
     $("#btnSearch").click(function(){
+    	search();
+	});
+    
+    search = function(){
 	    $.ajax({
 	        url : '/admin/menu',
 	        method : 'post',
@@ -260,8 +309,12 @@
 	            console.log(data.responseText);
 	        }
 	    });
-	
-	});
+    }
+    
+    
+    $("#btnAdd").click(function(){
+    	document.getElementById("form").reset();
+    });
     
 </script>
 

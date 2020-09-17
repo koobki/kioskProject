@@ -24,17 +24,21 @@ public class AdminService {
 
 	public void addMenu(MenuInfo menuInfo) {
 		//1.파일생성하기
-		String fileNm = String.valueOf(System.currentTimeMillis())
-				+ "." + StringUtils.getFilenameExtension(menuInfo.getFileInfo().getOriginalFilename());     
-		try {
-			Files.copy(menuInfo.getFileInfo().getInputStream(), root.resolve(fileNm));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(menuInfo.getMenuNo() == null) {
+			String fileNm = String.valueOf(System.currentTimeMillis())
+					+ "." + StringUtils.getFilenameExtension(menuInfo.getFileInfo().getOriginalFilename());     
+			try {
+				Files.copy(menuInfo.getFileInfo().getInputStream(), root.resolve(fileNm));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+			//2. DB 데이터 저장
+			menuInfo.setMenuImgNm(fileNm);
+			adminMapper.insertMenuInfo(menuInfo);
+		} else {
+			adminMapper.updateMenuInfo(menuInfo);
 		}
-	
-		//2. DB 데이터 저장
-		menuInfo.setMenuImgNm(fileNm);
-		adminMapper.insertMenuInfo(menuInfo);
 		
 	}
 
