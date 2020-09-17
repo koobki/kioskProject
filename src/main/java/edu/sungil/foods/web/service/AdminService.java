@@ -24,6 +24,9 @@ public class AdminService {
 	
 	public void addMenu(MenuInfo menuInfo) {
 		//1. 파일생성
+		if(menuInfo.getMenuNo()  == null) {
+			
+		
 			String fileNm = String.valueOf(System.currentTimeMillis())
 			 + "." + StringUtils.getFilenameExtension(menuInfo.getFileInfo().getOriginalFilename());
 			try {
@@ -36,6 +39,9 @@ public class AdminService {
 		//2. DB데이터저장
 			menuInfo.setMenuImgNm(fileNm);
 			adminMapper.insertMenuInfo(menuInfo);
+			} else {
+				adminMapper.updateMenuInfo(menuInfo);
+			}
 	}
 
 	public List<MenuInfo> getMenuInfo(MenuInfo menuInfo) {
