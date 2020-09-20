@@ -1,5 +1,7 @@
 package edu.sungil.foods.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.sungil.foods.web.domain.dto.MenuInfo;
+import edu.sungil.foods.web.domain.dto.OrderInfo;
 import edu.sungil.foods.web.domain.dto.UserInfo;
+import edu.sungil.foods.web.service.AdminService;
 import edu.sungil.foods.web.service.DefaultService;
 
 /**
@@ -19,6 +24,9 @@ import edu.sungil.foods.web.service.DefaultService;
 public class DefaultController {
 	@Autowired
 	DefaultService defaultService;
+	
+	@Autowired
+	AdminService adminService;
 
 	@RequestMapping(value="/userInfo",method=RequestMethod.GET)
 	public void getUserInfo() {
@@ -42,6 +50,19 @@ public class DefaultController {
 		userInfo.setUserBirthDt(userBirthDt);
 		
 		defaultService.addUserInfo(userInfo);
+	}
+	
+	@RequestMapping(value="/menuList", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<MenuInfo>> getUserInfo(MenuInfo menuInfo) {
+		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(menuInfo), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/order", method = RequestMethod.POST)
+	@ResponseBody
+	public void order(OrderInfo orderInfo) throws Exception {
+		
+		defaultService.order(orderInfo);
 	}
 	
 	

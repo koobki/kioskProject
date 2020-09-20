@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.sungil.foods.web.domain.DefaultMapper;
+import edu.sungil.foods.web.domain.dto.OrderInfo;
 import edu.sungil.foods.web.domain.dto.UserInfo;
 
 @Service
@@ -23,6 +24,11 @@ public class DefaultService {
 	
 	public void addUserInfo(UserInfo userInfo) {
 		 defaultMapper.addUserInfo(userInfo);
+	}
+
+	public void order(OrderInfo orderInfo) throws Exception {
+		throw new Exception("주문오류");
+		
 	}
 
 }
