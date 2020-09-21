@@ -51,4 +51,5 @@ public class AdminController {
 		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(menuInfo), HttpStatus.OK);
 
 	}
+	
 }

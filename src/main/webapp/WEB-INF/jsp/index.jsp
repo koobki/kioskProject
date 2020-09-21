@@ -18,20 +18,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="../static/vendor/jquery-3.2.1.min.js"></script>
   <script src="../static/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-  <script type ="text/javascript">
-	$(document).ready(function(){
-	    $('.count').prop('disabled', true);
-			$(document).on('click','.plus',function(){
-				 $(this).siblings('.count').val(parseInt($(this).siblings('.count').val())+1);
-		});
-    	$(document).on('click','.minus',function(){
-    		$(this).siblings('.count').val(parseInt($(this).siblings('.count').val())-1);
-				if ($(this).siblings('.count').val() == 0) {
-					$(this).siblings('.count').val(1);
-				}
-	    	});
-		});
-  </script>
+  
 
 </head>
 
@@ -57,8 +44,8 @@
 
        
 
-        <div class="row">
-
+        <div id="menuList" class="row">
+			<template id="menuCard">
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
               <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
@@ -66,7 +53,7 @@
                 <h4 class="card-title">
                   춘천 국물 닭갈비 떡뽁이
                 </h4>
-                <h5>2,000원</h5>
+                <h5 class='card-price'>2,000원</h5>
                 <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
               </div>
               <div class="card-footer" >
@@ -76,77 +63,16 @@
                         <span class="plus bg-dark">+</span>
                     </div>
                     <div style="display:inline; padding-top:0px">
-                    <button type="button" class="btn btn-warning" style="margin-left:15px; padding:3px 15px 3px 15px"><i class="fa fa-cutlery"></i> 주문</button>
+                    <button name="btnOrder"type="button" class="btn btn-warning" style="margin-left:15px; padding:3px 15px 3px 15px"><i class="fa fa-cutlery"></i> 주문</button>
                     </div>
+                    <input type=hidden class="menu-no">
+                    <input type=hidden class="menu-pc">
+                    <input type=hidden class="menu-nm">
               </div>
             </div>
           </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  춘천 국물 닭갈비 떡뽁이
-                </h4>
-                <h5>2,000원</h5>
-                <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
-              </div>
-              <div class="card-footer" >
-                <div class="qty" style="display:inline;">
-                        <span class="minus bg-dark">-</span>
-                        <input type="number" class="count" name="qty" value="1">
-                        <span class="plus bg-dark">+</span>
-                    </div>
-                    <div style="display:inline; padding-top:0px">
-                    <button type="button" class="btn btn-warning" style="margin-left:15px; padding:3px 15px 3px 15px"><i class="fa fa-cutlery"></i> 주문</button>
-                    </div>
-              </div>
-            </div>
-          </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  춘천 국물 닭갈비 떡뽁이
-                </h4>
-                <h5>2,000원</h5>
-                <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
-              </div>
-              <div class="card-footer" >
-                <div class="qty" style="display:inline;">
-                        <span class="minus bg-dark">-</span>
-                        <input type="number" class="count" name="qty" value="1">
-                        <span class="plus bg-dark">+</span>
-                    </div>
-                    <div style="display:inline; padding-top:0px">
-                    <button type="button" class="btn btn-warning" style="margin-left:15px; padding:3px 15px 3px 15px"><i class="fa fa-cutlery"></i> 주문</button>
-                    </div>
-              </div>
-            </div>
-          </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="../static/media/1.PNG" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  춘천 국물 닭갈비 떡뽁이
-                </h4>
-                <h5>2,000원</h5>
-                <p class="card-text">닭갈비와 떡볶이의 오묘한 조화</p>
-              </div>
-              <div class="card-footer" >
-                <div class="qty" style="display:inline;">
-                        <span class="minus bg-dark">-</span>
-                        <input type="number" class="count" name="qty" value="1">
-                        <span class="plus bg-dark">+</span>
-                    </div>
-                    <div style="display:inline; padding-top:0px">
-                    <button type="button" class="btn btn-warning" style="margin-left:15px; padding:3px 15px 3px 15px"><i class="fa fa-cutlery"></i> 주문</button>
-                    </div>
-              </div>
-            </div>
-          </div>
+          </template>
+          
         </div>
         <!-- /.row -->
 
@@ -170,5 +96,86 @@
 
 
 </body>
+<script type ="text/javascript">
+	$(document).ready(function(){
+	    $('.count').prop('disabled', true);
+			$(document).on('click','.plus',function(){
+				 $(this).siblings('.count').val(parseInt($(this).siblings('.count').val())+1);
+		});
+    	$(document).on('click','.minus',function(){
+    		$(this).siblings('.count').val(parseInt($(this).siblings('.count').val())-1);
+				if ($(this).siblings('.count').val() == 0) {
+					$(this).siblings('.count').val(1);
+				}
+	    	});
+    	
+    	getMenuList();
+    	
+		});
+	
+	getMenuList = function(){
+		    $.ajax({
+		        url : '/menuList',
+		        method : 'post',
+		        success : function(data) {
+		        	if(data ===""){
+		        		alert("메뉴가 존재하지 않습니다.")
+		        	} else{
+			        	data.forEach(function(menu){
+			        		let card = $($('#menuCard').html());
+			        		card.find('.card-img-top').attr('src','../static/media/'+ menu.menuImgNm);
+			        		card.find('.card-title').text(menu.menuNm);
+			        		card.find('.card-price').text(menu.menuPc);
+			        		card.find('.card-text').text(menu.menuDsc);
+			        		
+			        		card.find('.menu-no').val(menu.menuNo);
+			        		card.find('.menu-nm').val(menu.menuNm);
+			        		card.find('.menu-pc').val(menu.menuPc);
+			        		
+			        		$('#menuList').append(card);
+			        		
+			        	})
+		        	}
+		        },
+		        complete : function(data) {
+		            console.log(data.responseText);
+		        }
+		    });
+	}
+	
+	//주문버튼 클릭
+	$(document).on('click','button[name="btnOrder"]', function(){
+		var ordQty = $(this).parent().siblings('.qty').children('.count').val();
+		var menuNo = $(this).parent().siblings('.menu-no').val();
+		var menuNm = $(this).parent().siblings('.menu-nm').val();
+		var menuPc = $(this).parent().siblings('.menu-pc').val();
+		
+		
+		var msg = menuNm+ "" + ordQty+"라면 2개 주문하시나요?\n" +menuPc + "*" + ordQty + " =" + menuPc*ordQty+"원입니다/";
+		
+		if(confirm(msg)){
+			    $.ajax({
+			        url : '/order,
+			        method : 'post',
+			        data : {
+			        	menuNo: menuNo,
+			        	ordQty: ordQty
+			        },
+			        success : function(data) {
+			        	alert("주문 성공.")
+			        },
+			        error : function(data){
+			        	alert("주문 실패.")
+			        }
+			        complete : function(data) {
+			            console.log(data.responseText);
+			        }
+			    });
+			
+			});
+		}
+	});
+	
+  </script>
 
 </html>
