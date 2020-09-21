@@ -44,7 +44,7 @@ public class AdminController {
 		adminService.addMenu(menuInfo);
 	}
 	
-	@RequestMapping(value="menu",method=RequestMethod.POST)
+	@RequestMapping(value="/menu",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<List<MenuInfo>> getMenuList(MenuInfo menuInfo) {
 		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(menuInfo), HttpStatus.OK);
