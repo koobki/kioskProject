@@ -26,5 +26,23 @@
 		)
     </insert>
 
+  	<insert id="insertOrd" parameterType="edu.sungil.foods.web.domain.dto.OrderInfo">
+        insert into mainDb.TB_ORD(ord_dt, menu_no, menu_nm, ord_qty, ord_amt, ord_stat)
+        values(
+        	NOW()
+        	,#{menuNo}
+        	,#{menuNm}
+        	,#{ordQty}
+        	,#{ordAmt}
+        	,#{ordStat}
+        	
+        )
+    </insert>
+    
+    <update id="updateMenuStock" parameterType="edu.sungil.foods.web.domain.dto.OrderInfo">
+  		update mainDb.TB_MENU set 
+		  		menu_stock = menu_stock - #{ordQty}
+		where 	menu_no = #{menuNo}
+  	</update>
   
 </mapper> 

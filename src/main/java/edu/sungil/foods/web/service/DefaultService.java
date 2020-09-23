@@ -32,10 +32,29 @@ public class DefaultService {
 		 defaultMapper.addUserInfo(userInfo);
 	}
 
-	public void order(OrderInfo orderInfo) {
+	public void order(OrderInfo orderInfo) throws Exception {
+		
 		MenuInfo menuInfo = new MenuInfo();
 		menuInfo.setMenuNo(orderInfo.getMenuNo());
 		List<MenuInfo> menuInfoList = adminMapper.selectMenuList(menuInfo);
+		
+		orderInfo.setMenuNm(menuInfoList.get(0).getMenuNm());
+		Long ordQty = orderInfo.getOrdQty();
+		Long menuPc = menuInfoList.get(0).getMenuPc();
+		Long ordAmt = ordQty*menuPc;
+		orderInfo.setOrdAmt(ordAmt);
+		orderInfo.setOrdStat("결제완료");
+		//주문가능재고 확인
+		Long menuStock = menuInfoList.get(0).getMenuStock();
+		if(ordQty > menuStock) {
+			throw new Exception("재고가 부족합니다.");
+		}
+		
+		//주문테이블에 인설트
+		defaultMapper.insertOrd(orderInfo);
+		//메뉴제고업데이트
+		
+		defaultMapper.updateMenuStock(orderInfo);
 		
 	}
 

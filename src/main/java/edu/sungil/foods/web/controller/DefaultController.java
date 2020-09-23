@@ -55,12 +55,14 @@ public class DefaultController {
 	@RequestMapping(value="menuList",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<List<MenuInfo>> getMenuList(MenuInfo menuInfo) {
+		
+		menuInfo.setMenuDispYn("Y");
 		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(menuInfo), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/order",method=RequestMethod.POST)
 	@ResponseBody
-	public void order(OrderInfo orderInfo) {
+	public void order(OrderInfo orderInfo) throws Exception {
 		defaultService.order(orderInfo);
 		
 	}
