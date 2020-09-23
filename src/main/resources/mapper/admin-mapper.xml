@@ -34,6 +34,9 @@
         <if test="menuNm != '' and menuNm !=null">
         and menu_nm LIKE  CONCAT('%', #{menuNm}, '%')
         </if>
+        <if test="menuDispYn != '' and menuDispYn !=null">
+        and menu_disp_yn = #{menuDispYn}
+        </if>
    </select>
    
    <update id="updateMenuInfo" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo" >

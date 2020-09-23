@@ -125,7 +125,7 @@
                                                     <label class=" form-control-label">메뉴번호</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="text" id="menuNo" name="menuNo" placeholder="메뉴번호" readonly class="form-control">
+                                                    <input type="text" id="menuNo" name="menuNo" placeholder="메뉴번호"  readonly class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -139,10 +139,10 @@
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label for="price" class=" form-control-label">단가</label>
+                                                    <label for="menuPc" class=" form-control-label">단가</label>
                                                 </div>
                                                 <div class="col-3 col-md-3">
-                                                    <input type="number" id="menuPc" name="menuPc" placeholder="단가" class="form-control">
+                                                    <input type="number" id="menuPc" name="menuPc" placeholder="단가" min="0" class="form-control">
                                                     <small class="help-block form-text"></small>
                                                 </div>
                                             </div>
@@ -260,6 +260,9 @@
     
     $("#btnSave").click(function(){
     	//event.preventDefault();
+    	if(!validate()){
+    		return;
+    	}
     	
     	var form = $('#form')[0];
     	var data = new FormData(form);
@@ -283,6 +286,26 @@
 	    });
 	
 	});
+    
+    validate = function(){
+    	if($('#menuNm').val() == ""); {
+    		alert(''메뉴이름을 입력해 주세요.");
+    		#("#menuNm").focus();
+    		return false;
+    	}
+    	if($('#menuPc').val() ==""); {
+    		alert(''메뉴가격을 입력해 주세요.");
+    		#("#menuPc").focus();
+    		return false;
+    	}
+    	if($('#menuStock').val() ==""); {
+    		#("#menuStock").focus();
+    		alert(''메뉴 가격을 입력해 주세요");
+    		return false;
+    	}
+    	return true;
+    }
+    
     
     $("#btnSearch").click(function(){
     	search();
