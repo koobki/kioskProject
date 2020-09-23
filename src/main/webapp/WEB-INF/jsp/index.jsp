@@ -159,7 +159,7 @@
 		        	alert("주문 성공. 대기해주세요.");
 		        },
 		        error : function(data){
-		        	alert("주문 실패. 문의해주세요.");
+		        	alert(data.responseJSON.message);
 		        },
 		        complete : function(data) {
 		            console.log(data.responseText);
