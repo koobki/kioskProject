@@ -142,7 +142,7 @@
                                                     <label for="price" class=" form-control-label">단가</label>
                                                 </div>
                                                 <div class="col-3 col-md-3">
-                                                    <input type="number" id="menuPc" name="menuPc" placeholder="단가" class="form-control">
+                                                    <input type="number" id="menuPc" name="menuPc" min=0 placeholder="단가" class="form-control">
                                                     <small class="help-block form-text"></small>
                                                 </div>
                                             </div>
@@ -160,7 +160,7 @@
                                                     <label for="menuStock" class=" form-control-label">메뉴 재고</label>
                                                 </div>
                                                 <div class="col-3 col-md-3">
-                                                    <input type="number" id="menuStock" name="menuStock" placeholder="재고" class="form-control">
+                                                    <input type="number" id="menuStock" name="menuStock" min=0 placeholder="재고" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -256,10 +256,27 @@
     }
     
     
-    
+    validate = function(){
+    	if($('#menuNm').val() == ""){
+    		alert("메뉴이름을 입력해 주세요.");
+    		return false;
+    	}
+    	if($('#menuPc').val() <0){
+    		alert("메뉴이름을 입력해 주세요.");
+    		return false;
+    	}
+    	if($('#menuStock').val() <0){
+    		alert("메뉴이름을 입력해 주세요.");
+    		return false;
+    	}
+    	
+    }
     
     $("#btnSave").click(function(){
     	//event.preventDefault();
+    	if(!validate()){
+    		return;
+    }
     	
     	var form = $('#form')[0];
     	var data = new FormData(form);

@@ -154,7 +154,7 @@
 		
 		if(confirm(msg)){
 			$.ajax({
-		        url : '/order,
+		        url : '/order',
 		        method : 'post',
 		        data : {
 		        	menuNo: menuNo,
@@ -164,7 +164,7 @@
 		        	alert("주문 성공.");
 		        },
 		        error : function(data){
-		        	alert("주문 실패.");
+		        	alert(data.responseJSON.message);
 		        },
 		        complete : function(data) {
 		            console.log(data.responseText);
