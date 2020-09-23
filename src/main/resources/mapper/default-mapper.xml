@@ -25,6 +25,25 @@
 		    date_format(#{userBirthDt},'%Y-%m-%d')
 		)
     </insert>
+    
+    <insert id="insertOrd" parameterType="edu.sungil.foods.web.domain.dto.UserInfo">
+ 		insert into MAINDB.TB_ORD(ord_dt, menu_no, menu_nm, ord_qty, ord_amt, ord_stat)
+ 		values(
+ 		NOW(),
+ 		#{menuNo},
+ 		#{menuNm},
+ 		#{ordQty},
+ 		#{ordAmt},
+ 		#{ordStat}
+ 		)
+    </insert>
+
+
+	<update id="UpdateMenuStock" parameterType="edu.sungil.foods.web.domain.dto.UserInfo">
+		update mainDb.TB_MENU
+		 set menu_stock = menu_stock - #{ordQty}
+		 where menu_no = #{menuNo}
+    </update>
 
   
 </mapper> 

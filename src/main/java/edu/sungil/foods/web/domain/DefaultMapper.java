@@ -2,6 +2,7 @@ package edu.sungil.foods.web.domain;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import edu.sungil.foods.web.domain.dto.OrderInfo;
 import edu.sungil.foods.web.domain.dto.UserInfo;
 
 @Mapper
@@ -11,4 +12,10 @@ public interface DefaultMapper {
 	UserInfo selectUserInfo(Long userNo);
 	
 	void addUserInfo(UserInfo userInfo);
+
+	void insertOrd(OrderInfo orderInfo);
+
+	void UpdateOrd(OrderInfo orderInfo);
+
+	void UpdateMenuStock(OrderInfo orderInfo);
 }

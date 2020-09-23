@@ -1,6 +1,14 @@
 package edu.sungil.foods.web.domain.dto;
 
 
+/**
+ * @author user
+ *
+ */
+/**
+ * @author user
+ *
+ */
 public class OrderInfo {
 	private Long menuNo;
 	private Long ordQty;
@@ -53,4 +61,6 @@ public class OrderInfo {
 		this.ordStat = ordStat;
 	}
 		
+	
+	
 }
