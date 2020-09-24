@@ -1,85 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 <mapper namespace="edu.sungil.foods.web.domain.AdminMapper">
 
-   <insert id= "insertMenuInfo" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo">
-      insert into mainDb.TB_MENU(menu_nm, menu_pc, menu_dsc, menu_stock, menu_disp_yn, menu_img_nm)
-       values(
-           #{menuNm}
-           ,#{menuPc}
-           ,#{menuDsc}
-           ,#{menuStock}
-           ,#{menuDispYn}
-           ,#{menuImgNm}
-       )
-   </insert>
+	<insert id="insertMenuInfo"
+		parameterType="edu.sungil.foods.web.domain.dto.MenuInfo">
+		insert into mainDb.TB_MENU(menu_nm, menu_pc, menu_dsc, menu_stock,
+		menu_disp_yn, menu_img_nm)
+		values(
+		#{menuNm}
+		,#{menuPc}
+		,#{menuDsc}
+		,#{menuStock}
+		,#{menuDispYn}
+		,#{menuImgNm}
+		)
+	</insert>
+
+	<select id="selectMenuList"
+		parameterType="edu.sungil.foods.web.domain.dto.MenuInfo"
+		resultType="edu.sungil.foods.web.domain.dto.MenuInfo">
+
+		select menu_no,
+		menu_nm,
+		menu_pc,
+		menu_dsc,
+		menu_stock,
+		menu_disp_yn,
+		menu_img_nm
+		from mainDb.TB_MENU
+		where 1=1
+		<if test="menuNo != '' and menuNo !=null">
+			and menu_no = #{menuNo}
+		</if>
+		<if test="menuNm != '' and menuNm !=null">
+			and menu_nm LIKE CONCAT('%', #{menuNm}, '%')
+		</if>
+		<if test="menuDispYn != '' and menuDispYn !=null">
+			and menu_disp_yn = #{menuDispYn}
+		</if>
+	</select>
+
+	<select id="selectMenu"
+		parameterType="edu.sungil.foods.web.domain.dto.MenuInfo"
+		resultType="edu.sungil.foods.web.domain.dto.MenuInfo">
+
+		select menu_no,
+		menu_nm,
+		menu_pc,
+		menu_dsc,
+		menu_stock,
+		menu_disp_yn,
+		menu_img_nm
+		from mainDb.TB_MENU
+		where 1=1
+		<if test="menuNo != '' and menuNo !=null">
+			and menu_no = #{menuNo}
+		</if>
+		<if test="menuNm != '' and menuNm !=null">
+			and menu_nm LIKE CONCAT('%', #{menuNm}, '%')
+		</if>
+		<if test="menuDispYn != '' and menuDispYn !=null">
+			and menu_disp_yn = #{menuDispYn}
+		</if>
+	</select>
+
+	<update id="updateMenuInfo"
+		parameterType="edu.sungil.foods.web.domain.dto.MenuInfo">
+		update mainDb.TB_MENU
+		set menu_nm = #{menuNm},
+		menu_pc = #{menuPc},
+		menu_dsc = #{menuDsc},
+		menu_stock = #{menuStock},
+		menu_disp_yn = #{menuDispYn}
+		where menu_no = #{menuNo}
+	</update>
+
+    <select id="selectOrderList" 
+        parameterType="edu.sungil.foods.web.domain.dto.OrderInfo"
+		resultType="edu.sungil.foods.web.domain.dto.OrderInfo">
+		
+		select *
+		  from mainDb.TB_ORD
+		 where 1=1
+		 <if test="ordNo !='' and ordNo !=null">
+		  and ord_no = #{ordNo}
+		 </if>
+		 <if test="ordDt !='' and ordDt !=null">
+		  and date(ord_dt) >= date(SUBDATE(now(), INTERVAL #{ordDt} DAY ))		
+		   </if>
+		 <if test="ordStat !='' and ordStat !=null">
+		 and ord_stat = #{ordStat}
+		 </if>
    
-   <select id="selectMenuList" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo" 
-                               resultType="edu.sungil.foods.web.domain.dto.MenuInfo">
-                               
-       select menu_no,
-              menu_nm, 
-              menu_pc, 
-              menu_dsc, 
-              menu_stock, 
-              menu_disp_yn, 
-              menu_img_nm
-       from   mainDb.TB_MENU
-      where 1=1
-        <if test="menuNo != '' and menuNo !=null">
-        and menu_no = #{menuNo}
-        </if>
-        <if test="menuNm != '' and menuNm !=null">
-        and menu_nm LIKE  CONCAT('%', #{menuNm}, '%')
-        </if>
-        <if test="menuDispYn != '' and menuDispYn !=null">
-        and menu_disp_yn = #{menuDispYn}
-        </if>
-   </select>
-   
-    <select id="selectMenu" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo" 
-                               resultType="edu.sungil.foods.web.domain.dto.MenuInfo">
-                               
-       select menu_no,
-              menu_nm, 
-              menu_pc, 
-              menu_dsc, 
-              menu_stock, 
-              menu_disp_yn, 
-              menu_img_nm
-       from   mainDb.TB_MENU
-      where 1=1
-        <if test="menuNo != '' and menuNo !=null">
-        and menu_no = #{menuNo}
-        </if>
-        <if test="menuNm != '' and menuNm !=null">
-        and menu_nm LIKE  CONCAT('%', #{menuNm}, '%')
-        </if>
-        <if test="menuDispYn != '' and menuDispYn !=null">
-        and menu_disp_yn = #{menuDispYn}
-        </if>
-   </select>
-   
-   <update id="updateMenuInfo" parameterType="edu.sungil.foods.web.domain.dto.MenuInfo" >
-       update mainDb.TB_MENU
-         set  menu_nm      = #{menuNm}, 
-              menu_pc      = #{menuPc}, 
-              menu_dsc     = #{menuDsc}, 
-              menu_stock   = #{menuStock}, 
-              menu_disp_yn = #{menuDispYn}
-        where menu_no      = #{menuNo}
-   </update>
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-  
+    </select>
+    
+    <update id="updateOrdStat" parameterType="edu.sungil.foods.web.domain.dto.OrderInfo">
+        update mainDb.TB_ORD
+           set ord_stat = '전달완료'
+          where ord_no = #{ordNo}
+    </update>
+
+
 </mapper> 
