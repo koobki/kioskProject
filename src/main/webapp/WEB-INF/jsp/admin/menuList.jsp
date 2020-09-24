@@ -284,23 +284,23 @@
 	            console.log(data.responseText);
 	        }
 	    });
-	
 	});
+    
     
     validate = function(){
     	if($('#menuNm').val() == ""); {
-    		alert(''메뉴이름을 입력해 주세요.");
-    		#("#menuNm").focus();
+    		alert("메뉴이름을 입력해 주세요.");
+    		$("#menuNm").focus();
     		return false;
     	}
     	if($('#menuPc').val() ==""); {
-    		alert(''메뉴가격을 입력해 주세요.");
-    		#("#menuPc").focus();
+    		alert("메뉴가격을 입력해 주세요.");
+    		$("#menuPc").focus();
     		return false;
     	}
     	if($('#menuStock').val() ==""); {
-    		#("#menuStock").focus();
-    		alert(''메뉴 가격을 입력해 주세요");
+    		$("#menuStock").focus();
+    		alert("메뉴 가격을 입력해 주세요");
     		return false;
     	}
     	return true;
@@ -322,7 +322,7 @@
 	        },
 	        success : function(data) {
 	        	if(data ===""){
-	        		alert("메뉴가 존재하지 않습니다.")
+	        		alert("메뉴가 존재하지 않습니다.");
 	        	} else{
 		        	menuData = data;
 	        	}

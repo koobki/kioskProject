@@ -49,7 +49,27 @@
         where menu_no      = #{menuNo}
    </update>
    
+   <select id="selectOrderList" parameterType="edu.sungil.foods.web.domain.dto.OrderInfo" 
+        					                        resultType="edu.sungil.foods.web.domain.dto.OrderInfo">
+   		select * 
+   		from mainDb.TB_ORD
+   		where 1=1
+   		<if test="ordNo != '' and ordNo != null">
+   			and ord_no = #{ordNo}
+   		</if>
+   		<if test="ordDt != '' and ordDt != null">
+   			and date(ord_dt) >= date(SUBDATE(now(), INTERVAL #{ordDt} DAY))
+   		</if>
+   		<if test="ordStat != '' and ordStat != null">
+   			and ord_stat = #{ordStat}
+   		</if> 
+   </select>
    
+   <update id="updateOrdStat" parameterType="edu.sungil.foods.web.domain.dto.OrderInfo">
+   	update mainDb.TB_ORD 
+   	set ord_stat = '전달완료'
+   	where ord_no = #{ordNo}
+   </update>
    
    
    
