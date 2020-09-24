@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import edu.sungil.foods.web.domain.dto.MenuInfo;
+import edu.sungil.foods.web.domain.dto.OrderInfo;
 import edu.sungil.foods.web.service.AdminService;
 
 /**
@@ -50,6 +51,17 @@ public class AdminController {
 		return new ResponseEntity<List<MenuInfo>>(adminService.getMenuList(menuInfo), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/order",method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<OrderInfo>> getOrderList(OrderInfo orderInfo) {
+		return new ResponseEntity<List<OrderInfo>>(adminService.getOrderList(orderInfo), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/ordStat",method=RequestMethod.POST)
+	@ResponseBody
+	public void updateOrdStat(OrderInfo orderInfo) {
+		adminService.updateOrdStat(orderInfo);
+	}
 	
 	
 }
