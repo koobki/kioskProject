@@ -261,6 +261,7 @@
     		alert("메뉴이름을 입력해 주세요.");
     		return false;
     	}
+    	
     	if($('#menuPc').val() <0){
     		alert("메뉴이름을 입력해 주세요.");
     		return false;
