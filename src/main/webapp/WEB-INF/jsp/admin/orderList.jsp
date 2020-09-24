@@ -67,25 +67,25 @@
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
                                     <div class="rs-select2--light rs-select2--sm">
-                                        <select class="js-select2" name="time">
-                                            <option selected="selected" value="today">오늘</option>
-                                            <option value="3days">3일전</option>
-                                            <option value="7days">일주일전</option>
+                                        <select id='schOrdDt' class="js-select2" name="time">
+                                            <option selected="selected" value="0">오늘</option>
+                                            <option value="3">3일전</option>
+                                            <option value="7">일주일전</option>
                                         </select>
                                         <div class="dropDownSelect2"></div>
                                     </div>
                                      <div class="rs-select2--light rs-select2--sm">
-                                        <select class="js-select2" name="time">
+                                        <select id = 'schOrdStat' class="js-select2" name="time">
                                             <option selected="selected" value="">주문상태</option>
-                                            <option value="01">결제완료</option>
-                                            <option value="02">전달완료</option>
+                                            <option value="결제완료">결제완료</option>
+                                            <option value="전달완료">전달완료</option>
                                         </select>
                                         <div class="dropDownSelect2"></div>
                                     </div>
-                                    <input type="text" placeholder="주문번호" class="au-btn-filter">
+                                    <input id = 'schOrdNo' type="text" placeholder="주문번호" class="au-btn-filter">
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                    <button id='btnSearch' class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="fa  fa-search"></i>검색</button>
                                 </div>
                             </div>
@@ -103,41 +103,26 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr class="tr-shadow">
-                                            <td>2</td>
-                                            <td>2020-09-27 02:12</td>
-                                            <td>1</td>
-                                            <td class="desc">매운떡복이</td>
-                                            <td>2</td>
-                                            <td>3,000</td>
-                                            <td><span class="status--denied">결제완료</span></td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <button class="btn btn-success">
-                                                                                                                완료</i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
-                                        <tr class="tr-shadow">
-                                            <td>1</td>
-                                            <td>2020-09-27 02:12</td>
-                                            <td>3</td>
-                                            <td class="desc">해물 스파게티</td>
-                                            <td>1</td>
-                                            <td>6,000</td>
-                                            <td><span class="status--process">전달완료</span></td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <button class="btn btn-success" disabled="disabled">
-                                                                                                                완료</i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
+                                    <tbody id="orderList">
+                                        <template id="tempOrd">
+	                                        <tr class="tr-shadow">
+	                                            <td class="ordNo">2</td>
+	                                            <td class="ordDt">2020-09-27 02:12</td>
+	                                            <td class="menuNo">1</td>
+	                                            <td class="menuNm">매운떡복이</td>
+	                                            <td class="ordQty">2</td>
+	                                            <td class="ordAmt">3,000</td>
+	                                            <td><span class="ordStat">결제완료</span></td>
+	                                            <td>
+	                                                <div class="table-data-feature">
+	                                                    <button name="btnCmp" class="btn btn-success">
+	                                                                                                                완료</i>
+	                                                    </button>
+	                                                </div>
+	                                            </td>
+	                                        </tr>
+	                                        <tr class="spacer"></tr>
+                                        </template>
                                     </tbody>
                                 </table>
                             </div>
@@ -149,4 +134,58 @@
              <%@ include file="/WEB-INF/jsp/admin/include/footer.jsp" %>   
     </div>
 </body>
+
+<script type ="text/javascript">
+
+$("#btnSearch").click(function(){
+	search();
+});
+
+search  = function(){
+	$.ajax({
+        url : '/admin/order',
+        data: {
+            ordDt: $('#schOrdDt option:selected' ).val()
+           ,ordStat: $('#schOrdStat option:selected' ).val()
+           ,ordNo: $("#schOrdNo").val()
+        },
+        dataType: "json",
+        method : 'post',
+        success : function(data) {
+        	if(data ===""){
+        		alert("주문이 존재하지 않습니다.")
+        	} else{
+        		$('tbody tr').remove();
+        		data.forEach(function (order) {
+        			let tmpTr=$($('#tempOrd').html());
+                    //tmpTr.find('.card-img-top').attr('src','../static/media/'+ menu.menuImgNm);
+                    tmpTr.find('.ordNo').text(order.ordNo);
+                    tmpTr.find('.menuNo').text(order.menuNo);
+                    tmpTr.find('.menuNm').text(order.menuNm);
+                    tmpTr.find('.ordDt').text(order.ordDt);
+                    tmpTr.find('.ordAmt').text(order.orAmt);
+                    tmpTr.find('.ordStat').text(order.ordStat);
+                    if(order.ordStat==="결제완료"){
+                    	tmpTr.find('.ordStat').addClass('status--denied');
+                    	tmpTr.find("button[name=btnCmp]").attr('onclick','ordCpm('+order.ordNo+')');
+                    } else {
+                    	tmpTr.find('.ordStat').addClass('status--process');
+                    	tmpTr.find("button[name=btnCmp]").attr('disabled','disabled');
+                    }
+                    tmpTr.find('.ordStat').text(order.ordStat);
+                    
+                     $('#orderList').append(tmpTr);
+       		});
+        	}
+        },
+        complete : function(data) {
+            console.log(data.responseText);
+        }
+    });
+}
+ordCpm = function(ordNo){
+	alert(ordNo);
+}
+
+</script>
 </html>

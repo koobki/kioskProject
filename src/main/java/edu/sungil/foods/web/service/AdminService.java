@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import edu.sungil.foods.web.domain.AdminMapper;
 import edu.sungil.foods.web.domain.dto.MenuInfo;
+import edu.sungil.foods.web.domain.dto.OrderInfo;
 
 @Service
 @Transactional
@@ -45,6 +46,11 @@ public class AdminService {
 	public List<MenuInfo> getMenuList(MenuInfo menuInfo) {
 		List<MenuInfo> menuInfoList = adminMapper.selectMenuList(menuInfo);
 		return menuInfoList;
+	}
+
+	public List<OrderInfo> getOrderList(OrderInfo orderInfov) {
+		List<OrderInfo> orderInfoList = adminMapper.selectOrderList(orderInfov);
+		return orderInfoList;
 	}
 
 }
