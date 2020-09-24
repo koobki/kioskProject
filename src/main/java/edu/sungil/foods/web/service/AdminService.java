@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import edu.sungil.foods.web.domain.AdminMapper;
 import edu.sungil.foods.web.domain.dto.MenuInfo;
+import edu.sungil.foods.web.domain.dto.OrderInfo;
 
 @Service
 @Transactional
@@ -45,6 +46,16 @@ public class AdminService {
 	public List<MenuInfo> getMenuList(MenuInfo menuInfo) {
 		// TODO Auto-generated method stub
 		return adminMapper.selectMenuList(menuInfo);
+	}
+
+	public List<OrderInfo> getOrderList(OrderInfo orderInfo) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectOrderList(orderInfo);
+	}
+
+	public void UpdateOrdStat(OrderInfo orderInfo) {
+		adminMapper.UpdateOrdStat(orderInfo);
+		
 	}
 	 
 	 
